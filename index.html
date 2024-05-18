@@ -115,7 +115,7 @@ body {
         <center>
           <label for="count_time" class="timerall">INTERVAL</label>
           
-          <input  id="count_time" type="number" value="90" min="0" class="timerall" />  
+          <input  id="count_time" type="number" oninput="this.value = Math.round(this.value);" value="90" min="0" class="timerall" />  
           <br>
           <input id="toggle" type="button" onclick="window.toggle_timer()" class="timerall" value="start">
         </center>
