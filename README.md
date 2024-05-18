@@ -1,8 +1,10 @@
 # simple_interval_timer
 
-MIT license blah blah blah IDGAF
+MIT license blah blah blah 
 
 A very simple timer that I use for cooking and workouts.  Input the number of seconds and hit start, it will run and beep until you hit stop. 
+
+It tries to keep your screen awake so you can see the count.
 
 run it from here:
 
@@ -18,11 +20,9 @@ or fork it and rehost on your own gh pages.
 
 \<rant>
 I cannot believe this still doesn't exist as a function of the android clock so I finally wrote one. 
-I spent more time trying to find an interval timer on the play store than it took to write it.  
-
 \</rant> 
 
 
-##references:
+## references:
 https://stackoverflow.com/a/49077414/643920
 https://www.geeksforgeeks.org/making-a-simple-pwa-under-5-minutes/

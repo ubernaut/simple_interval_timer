@@ -76,8 +76,8 @@ body {
                 
                 function beep(w,x,y){
                 console.log("Gain:"+w, "Hz:"+x, "ms:"+y)
-                v = audio_context.createOscillator()
-                u = audio_context.createGain()
+                let v = audio_context.createOscillator()
+                let u = audio_context.createGain()
                 v.connect(u)
                 v.frequency.value = x
                 v.type = "square"
