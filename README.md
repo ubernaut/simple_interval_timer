@@ -16,7 +16,8 @@ or save it locally if you want to edit it at all and just open index.html in you
 
 or fork it and rehost on your own gh pages. 
 
-![image](https://github.com/ubernaut/simple_interval_timer/assets/1483522/924cdbbd-d503-4170-aa4b-504d4e6787d4)
+![image](https://github.com/ubernaut/simple_interval_timer/assets/1483522/ea0fdb05-c4e0-42db-a938-de9dfec4aae6)
+
 
 \<rant>
 I cannot believe this still doesn't exist as a function of the android clock so I finally wrote one. 
