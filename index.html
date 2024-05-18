@@ -1,10 +1,9 @@
 <style>
   * {
-    font-family:'Courier New', Courier, monospace;
-    
+    font-family:'Courier New', Courier, monospace;    
     font-size:120pt;
     text-align:center;
-    color:lightgreen;
+    color:lightskyblue;
   }
 body {
   background:black;
@@ -18,7 +17,7 @@ body {
     margin-right:auto;
     width:90vw;
     height:35vh;
-    outline:10px outset green;
+    outline:1px outset blue;
 }
 
 </style>
@@ -38,7 +37,7 @@ body {
 
                 // create an async function to request a wake lock
                 try {
-                  wakeLock = await navigator.wakeLock.request("screen");
+                  const wakeLock = await navigator.wakeLock.request("screen");
                   
                 } catch (err) {console.log(err);}
 
@@ -64,6 +63,9 @@ body {
                     count_time = document.getElementById("count_time").value;  
                     if(count_time<=0){        
                         beep(3,603,1000);
+                        setTimeout(() => {
+                          beep(3,300,500);
+                        }, 1200);
                         count_time = initial_count_time;
                         document.getElementById("count_time").value=count_time;
                     }else{
