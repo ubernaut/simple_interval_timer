@@ -1,22 +1,24 @@
-
 <style>
   * {
     font-family:'Courier New', Courier, monospace;
-    font-weight:bold;
+    
     font-size:120pt;
     text-align:center;
+    color:lightgreen;
   }
 body {
-  background:gray;
+  background:black;
 }
 
 .timerall {
+    background:black;
     font-size:140pt;    
     margin:auto;
     margin-left:auto;
     margin-right:auto;
     width:90vw;
     height:35vh;
+    outline:10px outset green;
 }
 
 </style>
@@ -38,10 +40,7 @@ body {
                 try {
                   wakeLock = await navigator.wakeLock.request("screen");
                   
-                } catch (err) {
-                  // The Wake Lock request has failed - usually system related, such as battery.
-                  
-                }
+                } catch (err) {console.log(err);}
 
                 function toggle_timer(){  
                 counter_state = !counter_state
@@ -115,7 +114,7 @@ body {
         <center>
           <label for="count_time" class="timerall">INTERVAL</label>
           
-          <input  id="count_time" type="number" oninput="this.value = Math.round(this.value);" value="90" min="0" class="timerall" />  
+          <input  id="count_time" type="number" oninput="this.value = Math.round(this.value);" value="90" min="0" max="3600" class="timerall" />  
           <br>
           <input id="toggle" type="button" onclick="window.toggle_timer()" class="timerall" value="start">
         </center>
