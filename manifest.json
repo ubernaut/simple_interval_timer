@@ -1,0 +1,13 @@
+{
+    "name": "simple_interval_timer",
+    "start_url":"index.html",
+    "display": "standalone",
+    "description": "A simple interval timer.",
+    "icons": [
+      {
+        "src": "interval.png",
+        "type": "image/png",
+        "sizes": "256x256"
+      }
+    ]
+  }

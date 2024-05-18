@@ -1,32 +1,29 @@
 
 <style>
+  * {
+    font-family:'Courier New', Courier, monospace;
+    font-weight:bold;
+    font-size:120pt;
+    text-align:center;
+  }
 body {
   background:gray;
 }
-#timerdiv {
-    font-size:40pt;
+
+.timerall {
+    font-size:140pt;    
     margin:auto;
     margin-left:auto;
     margin-right:auto;
+    width:90vw;
+    height:35vh;
 }
-#count_time{
-  margin-left:auto;
-  margin-right:auto;
-  width:90vw;
-  height:40vh;
-  font-size:70pt;
-  text-align:center;
-}
-#toggle {
-  margin-left:auto;
-  margin-right:auto;
-  width:90vw;
-  height:40vh;
-  font-size:70pt;
-}
+
 </style>
 <html>
     <head>
+        <link rel="manifest" href="manifest.json" />
+        <script src = "serviceworker.js"></script>
         <script type="text/javascript">
                     
                 let initial_count_time=90;
@@ -78,18 +75,36 @@ body {
                 v.start(audio_context.currentTime)
                 v.stop(audio_context.currentTime + y *0.001)
                 }
-                        
+                      
+
+                window.addEventListener('load', () => {
+                  registerSW();
+                });
+            
+                // Register the Service Worker
+                async function registerSW() {
+                  if ('serviceWorker' in navigator) {
+                    try {
+                      await navigator
+                            .serviceWorker
+                            .register('serviceworker.js');
+                    }
+                    catch (e) {
+                      console.log('SW registration failed');
+                    }
+                  }
+                }
         </script>    
         <title>Simple Interval Timer</title>
     </head>
 <body >
-    <div id="timerdiv">
+    <div id="timerdiv" >
         <center>
-          <label for="count_time">interval sec</label>
-          <br>  
-          <input type="number" value="90" min="0" id="count_time"/>  
+          <label for="count_time" class="timerall">INTERVAL</label>
+          
+          <input  id="count_time" type="number" value="90" min="0" class="timerall" />  
           <br>
-          <input type="button" id="toggle" onclick="toggle_timer()" value="start">
+          <input id="toggle" type="button" onclick="toggle_timer()" class="timerall" value="start">
         </center>
       </div>
 </body>
