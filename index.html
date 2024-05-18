@@ -105,6 +105,8 @@ body {
                     }
                   }
                 }
+
+        window.toggle_timer = toggle_timer
         </script>    
         <title>Simple Interval Timer</title>
     </head>
@@ -115,7 +117,7 @@ body {
           
           <input  id="count_time" type="number" value="90" min="0" class="timerall" />  
           <br>
-          <input id="toggle" type="button" onclick="toggle_timer()" class="timerall" value="start">
+          <input id="toggle" type="button" onclick="window.toggle_timer()" class="timerall" value="start">
         </center>
       </div>
 </body>
