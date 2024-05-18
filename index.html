@@ -1,0 +1,96 @@
+
+<style>
+body {
+  background:gray;
+}
+#timerdiv {
+    font-size:40pt;
+    margin:auto;
+    margin-left:auto;
+    margin-right:auto;
+}
+#count_time{
+  margin-left:auto;
+  margin-right:auto;
+  width:90vw;
+  height:40vh;
+  font-size:70pt;
+  text-align:center;
+}
+#toggle {
+  margin-left:auto;
+  margin-right:auto;
+  width:90vw;
+  height:40vh;
+  font-size:70pt;
+}
+</style>
+<html>
+    <head>
+        <script type="text/javascript">
+                    
+                let initial_count_time=90;
+                let count_time = initial_count_time;                
+                let counter_state = false;
+                let audio_context = new AudioContext()
+                document.count_down_interval =false; 
+                
+                function toggle_timer(){  
+                counter_state = !counter_state
+                if(counter_state){    
+                    document.getElementById("toggle").value = "stop"
+                    initial_count_time = document.getElementById("count_time").value;
+                    count_time=initial_count_time;
+                    document.count_down_interval = setInterval(
+                    function interval(){
+                        count_down();
+                    }, 1000);  
+                }else{
+                    document.getElementById("toggle").value = "start";
+                    clearInterval(document.count_down_interval);    
+                }  
+                }
+                
+                function count_down(){
+                if(!counter_state){    
+                }else{
+                    count_time = document.getElementById("count_time").value;  
+                    if(count_time<=0){        
+                        beep(3,603,1000);
+                        count_time = initial_count_time;
+                        document.getElementById("count_time").value=count_time;
+                    }else{
+                    count_time -=1;
+                    document.getElementById("count_time").value=count_time;
+                    }
+                }
+                }
+                
+                function beep(w,x,y){
+                console.log("Gain:"+w, "Hz:"+x, "ms:"+y)
+                v = audio_context.createOscillator()
+                u = audio_context.createGain()
+                v.connect(u)
+                v.frequency.value = x
+                v.type = "square"
+                u.connect(audio_context.destination)
+                u.gain.value = w * 0.01
+                v.start(audio_context.currentTime)
+                v.stop(audio_context.currentTime + y *0.001)
+                }
+                        
+        </script>    
+        <title>Simple Interval Timer</title>
+    </head>
+<body >
+    <div id="timerdiv">
+        <center>
+          <label for="count_time">interval sec</label>
+          <br>  
+          <input type="number" value="90" min="0" id="count_time"/>  
+          <br>
+          <input type="button" id="toggle" onclick="toggle_timer()" value="start">
+        </center>
+      </div>
+</body>
+</html>
