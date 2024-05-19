@@ -68,9 +68,7 @@ body {
                 }else{
                     count_time = document.getElementById("count_time").value;  
                     if(count_time<=0){        
-                        beep(3,60,300);
-                        beep(3,300,600);
-                        beep(3,600, 900);                        
+                        beep_thrice();
                         count_time = initial_count_time;
                         document.getElementById("count_time").value=count_time;
                     }else{
@@ -79,7 +77,17 @@ body {
                     }
                 }
                 }
-                
+                function beep_thrice(){
+                  setTimeout(() => {
+                    beep(100,60,100);   
+                  }, 100);
+                  setTimeout(() => {
+                    beep(200,300,100);
+                  }, 200);
+                  setTimeout(() => {
+                    beep(300,600, 100);  
+                  }, 300);
+                }
                 function beep(w,x,y){
                 console.log("Gain:"+w, "Hz:"+x, "ms:"+y)
                 let v = audio_context.createOscillator()
