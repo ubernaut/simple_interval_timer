@@ -16,7 +16,8 @@ or save it locally if you want to edit it at all and just open index.html in you
 
 or fork it and rehost on your own gh pages. 
 
-![image](https://github.com/ubernaut/simple_interval_timer/assets/1483522/ea0fdb05-c4e0-42db-a938-de9dfec4aae6)
+![image](https://github.com/ubernaut/simple_interval_timer/assets/1483522/c5edd3f9-8785-4b5e-8f62-b54f7078d5d6)
+
 
 
 \<rant>
