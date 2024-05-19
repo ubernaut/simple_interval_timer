@@ -121,6 +121,13 @@ body {
                 }
 
         window.toggle_timer = toggle_timer
+        var input = document.getElementById('myInput');
+
+        window.addEventListener('keypress', function(event) {
+          if (event.key === 'Enter') {
+            window.toggle_timer();
+          }
+        });
         </script>    
         <title>Simple Interval Timer</title>
     </head>
@@ -130,6 +137,7 @@ body {
           <input id="toggle" type="button" onclick="window.toggle_timer()" class="timerall" value="start">
           <label style="outline:0px" for="count_time" class="timerall">interval</label>          
           <input  id="count_time" type="number" oninput="this.value = Math.round(this.value);" value="5" min="0" max="3600" class="timerall" />  
+          <input enterkeyhint="window.toggle_timer()" style="display:none;" />
         </center>
       </div>
 </body>
