@@ -1,7 +1,7 @@
 {
     "name": "simple_interval_timer",
     "short_name":"SIT",
-    "start_url":"index.html",
+    "start_url":"https://ubernaut.github.io/simple_interval_timer/",
     "display": "standalone",
     "description": "A simple interval timer.",
     "background_color":"black",
