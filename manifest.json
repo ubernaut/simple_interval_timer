@@ -1,8 +1,10 @@
 {
     "name": "simple_interval_timer",
+    "short_name":"SIT",
     "start_url":"index.html",
     "display": "standalone",
     "description": "A simple interval timer.",
+    "background_color":"black",
     "icons": [
       {
         "src": "interval.png",
