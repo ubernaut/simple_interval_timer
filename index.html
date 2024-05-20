@@ -47,7 +47,8 @@ body {
                 function toggle_timer(){
                   audio_context = new AudioContext()  
                   if(!counter_state){    
-                    initial_count_time = document.getElementById("count_time").value                    
+                    initial_count_time = document.getElementById("count_time").value    
+                    localStorage.count_time=initial_count_time;                
                       document.getElementById("count_time").disabled=true;
                       document.getElementById("toggle").value = "reset"
                       initial_count_time = document.getElementById("count_time").value;
@@ -130,6 +131,16 @@ body {
             window.toggle_timer();
           }
         });
+
+        if(localStorage.count_time){
+          console.log("saved time found");
+          count_time = localStorage.count_time;
+          initial_count_time= localStorage.count_time;
+          document.getElementById("count_time").value=initial_count_time;
+        }
+
+
+
         </script>    
         <title>Simple Interval Timer</title>
     </head>
