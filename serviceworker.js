@@ -4,7 +4,7 @@ var staticCacheName = "pwa";
 self.addEventListener("install", function (e) {
   e.waitUntil(
     caches.open(staticCacheName).then(function (cache) {
-      return cache.addAll(["index.html","interval.png","interval.ico"]);
+      return cache.addAll(["https://ubernaut.github.io/simple_interval_timer/index.html","https://ubernaut.github.io/simple_interval_timer/interval.png","https://ubernaut.github.io/simple_interval_timer/interval.ico"]);
     })
   );
 });
