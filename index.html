@@ -79,7 +79,7 @@
       if (!counter_state) {
       } else {
         count_time = document.getElementById("count_time").value;
-        if (count_time <= 6 && count_time >= 1) {
+        if (count_time <= 6 && count_time > 1) {
           beep(100, 200, 100);
         } else {
           //keep audiocontext active
