@@ -1,156 +1,160 @@
 <style>
   * {
-    font-family:'Courier New', Courier, monospace;    
-    font-size:120pt;
-    text-align:center;
-    color:lightskyblue;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 120pt;
+    text-align: center;
+    color: lightskyblue;
   }
-body {
-  background:black;
-  padding:5px;
-}
 
-.timerall {
-    
-    background:black;
-    font-size:140pt;    
-    margin:auto;
-    margin-left:auto;
-    margin-right:auto;
-    width:90vw;
-    height:35vh;
-    outline:1px solid blue;
-}
-
+  body {
+    background: black;
+    padding: 5px;
+  }
+  .timerall {
+    background: black;
+    font-size: 140pt;
+    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90vw;
+    height: 35vh;
+    outline: 1px solid blue;
+  }
 </style>
 <html>
-    <head>
-      <link rel="shortcut icon" type="image/jpg" href="interval.ico"/>
 
-        <link rel="manifest" href="manifest.json" />
-        <script src = "serviceworker.js"></script>
-        <script type="module">
-                let audio_context = [];
-                let initial_count_time=5;
-                let count_time = initial_count_time;                
-                let counter_state = false;
-                document.count_down_interval =false; 
-                
-                let wakeLock = null;
+<head>
+  <link rel="shortcut icon" type="image/jpg" href="interval.ico" />
+  <link rel="manifest" href="manifest.json" />
+  <script src="serviceworker.js"></script>
+  <script type="module">
+    let audio_context = [];
+    let initial_count_time = 5;
+    let count_time = initial_count_time;
+    let counter_state = false;
+    document.count_down_interval = false;
+    let wakeLock = null;
 
-                // create an async function to request a wake lock
-                try {
-                  const wakeLock = await navigator.wakeLock.request("screen");
-                  
-                } catch (err) {
-                  console.log(err);
-                }
+    //retrieve previously stored count_time if it exists
+    if (localStorage.count_time) {
+      console.log("saved time found");
+      count_time = localStorage.count_time;
+      initial_count_time = localStorage.count_time;
+      document.getElementById("count_time").value = initial_count_time;
+    }
 
-                function toggle_timer(){
-                  audio_context = new AudioContext()  
-                  if(!counter_state){    
-                    initial_count_time = document.getElementById("count_time").value    
-                    localStorage.count_time=initial_count_time;                
-                      document.getElementById("count_time").disabled=true;
-                      document.getElementById("toggle").value = "reset"
-                      initial_count_time = document.getElementById("count_time").value;
-                      count_time=initial_count_time;
-                      document.count_down_interval = setInterval(
-                      function interval(){
-                          count_down();
-                      }, 1000);  
-                  }else{
-                    document.getElementById("count_time").value=initial_count_time;
-                    document.getElementById("count_time").disabled=false;
-                      document.getElementById("toggle").value = "start";
-                      clearInterval(document.count_down_interval);    
-                  }  
-                  counter_state = !counter_state
-                }
-                
-                function count_down(){
-                if(!counter_state){    
-                }else{
-                    count_time = document.getElementById("count_time").value;  
-                    if(count_time<=0){        
-                        beep_thrice();
-                        count_time = initial_count_time;
-                        document.getElementById("count_time").value=count_time;
-                    }else{
-                    count_time -=1;
-                    document.getElementById("count_time").value=count_time;
-                    }
-                }
-                }
-                function beep_thrice(){
-                  setTimeout(() => {
-                    beep(100,60,100);   
-                  }, 100);
-                  setTimeout(() => {
-                    beep(200,300,100);
-                  }, 200);
-                  setTimeout(() => {
-                    beep(300,600, 100);  
-                  }, 300);
-                }
-                function beep(w,x,y){ 
-                console.log("Gain:"+w, "Hz:"+x, "ms:"+y)
-                let v = audio_context.createOscillator()
-                let u = audio_context.createGain()
-                v.connect(u)
-                v.frequency.value = x
-                v.type = "square"
-                u.connect(audio_context.destination)
-                u.gain.value = w * 0.01
-                v.start(audio_context.currentTime)
-                v.stop(audio_context.currentTime + y *0.001)
-                }
-                      
+    // create an async function to request a wake lock
+    try {
+      const wakeLock = await navigator.wakeLock.request("screen");
+    } catch (err) {
+      console.log(err);
+    }
 
-                window.addEventListener('load', () => {
-                  registerSW();
-                });
-            
-                // Register the Service Worker
-                async function registerSW() {
-                  if ('serviceWorker' in navigator) {
-                    try {
-                      await navigator
-                            .serviceWorker
-                            .register('serviceworker.js');
-                    }
-                    catch (e) {
-                      console.log('SW registration failed');
-                    }
-                  }
-                }
+    function toggle_timer() {
+      counter_state = !counter_state
+      //audio context must be created in response to input event (ios safari workaround)
+      audio_context = new AudioContext();
+      //initialize and begin count down
+      if (counter_state) {
+        initial_count_time = document.getElementById("count_time").value;
+        localStorage.count_time = initial_count_time;
+        document.getElementById("count_time").disabled = true;
+        document.getElementById("toggle").value = "reset"
+        initial_count_time = document.getElementById("count_time").value;
+        count_time = initial_count_time;
+        document.count_down_interval = setInterval(
+          function interval() {
+            count_down();
+          }, 1000);
+        //reset count down. 
+      } else {
+        document.getElementById("count_time").value = initial_count_time;
+        document.getElementById("count_time").disabled = false;
+        document.getElementById("toggle").value = "start";
+        clearInterval(document.count_down_interval);
+      }
+    }
 
-        window.toggle_timer = toggle_timer
-        var input = document.getElementById('myInput');
+    function count_down() {
+      if (!counter_state) {
+      } else {
+        count_time = document.getElementById("count_time").value;
+        if (count_time <= 6 && count_time >= 1) {
+          beep(100, 200, 100);
+        } else {
+          //keep audiocontext active
+          beep(1, 1, 10);
+        }
+        if (count_time ==1){
+          beep(300, 600, 1000);
+          count_time -= 1;
+          document.getElementById("count_time").value = count_time;
+        }
+        else if (count_time <= 0) {
+          
+          count_time = initial_count_time;
+          document.getElementById("count_time").value = count_time;
+        } else {
+          count_time -= 1;
+          document.getElementById("count_time").value = count_time;
+        }
+      }
+    }
 
-        window.addEventListener('keypress', function(event) {
-          if (event.key === 'Enter') {
-            window.toggle_timer();
-          }
-        });
+    function beep(gn, hz, ms) {
+      let oscillator = audio_context.createOscillator()
+      let gain = audio_context.createGain()
+      oscillator.connect(gain)
+      oscillator.frequency.value = hz
+      oscillator.type = "square"
+      gain.connect(audio_context.destination)
+      gain.gain.value = gn * 0.01
+      oscillator.start(audio_context.currentTime)
+      oscillator.stop(audio_context.currentTime + ms * 0.001)
+    }
 
-        if(localStorage.count_time){
-          console.log("saved time found");
-          count_time = localStorage.count_time;
-          initial_count_time= localStorage.count_time;
-          document.getElementById("count_time").value=initial_count_time;
-        } 
-        </script>    
-        <title>Simple Interval Timer</title>
-    </head>
-<body >
-    <div id="timerdiv" >
-        <center>                                  
-          <input id="toggle" type="button" onclick="window.toggle_timer()" class="timerall" value="start">
-          <label style="outline:0px" for="count_time" class="timerall">interval</label>          
-          <input  id="count_time" type="number" oninput="this.value = Math.round(this.value);" value="5" min="0" max="3600" class="timerall" />  
-          <input enterkeyhint="window.toggle_timer()" style="display:none;" />
-        </center>
-      </div>
+    window.addEventListener('load', () => {
+      registerSW();
+    });
+
+    // Register the Service Worker
+    async function registerSW() {
+      if ('serviceWorker' in navigator) {
+        try {
+          await navigator
+            .serviceWorker
+            .register('serviceworker.js');
+        }
+        catch (e) {
+          console.log('SW registration failed');
+        }
+      }
+    }
+
+    window.toggle_timer = toggle_timer
+    var input = document.getElementById('myInput');
+
+    window.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+        window.toggle_timer();
+      }
+    });
+
+
+  </script>
+  <title>Simple Interval Timer</title>
+</head>
+
+<body>
+  <div id="timerdiv">
+    <center>
+      <input id="toggle" type="button" onclick="window.toggle_timer()" class="timerall" value="start">
+      <label style="outline:0px" for="count_time" class="timerall">interval</label>
+      <input id="count_time" type="number" oninput="this.value = Math.round(this.value);" value="5" min="0" max="3600"
+        class="timerall" />
+      <input enterkeyhint="window.toggle_timer()" style="display:none;" />
+    </center>
+  </div>
 </body>
+
 </html>
