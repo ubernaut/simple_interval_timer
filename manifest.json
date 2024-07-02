@@ -1,16 +1,16 @@
 {
-    "name": "simple_interval_timer",
-    "short_name":"SIT",
-    "start_url":"https://ubernaut.github.io/simple_interval_timer/",
-    "display": "standalone",
-    "description": "A simple interval timer.",
-    "background_color":"black",
-    "theme_color": "black",
-    "icons": [
-      {
-        "src": "interval.png",
-        "type": "image/png",
-        "sizes": "256x256"
-      }
-    ]
-  }
+  "name": "simple_interval_timer",
+  "short_name": "SIT",
+  "start_url": "https://ubernaut.github.io/simple_interval_timer/",
+  "display": "standalone",
+  "description": "A simple interval timer.",
+  "background_color": "black",
+  "theme_color": "black",
+  "icons": [
+    {
+      "src": "interval.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ]
+}
