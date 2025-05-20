@@ -26,7 +26,7 @@
     <link rel="shortcut icon" type="image/jpg" href="interval.ico" />
     <link rel="manifest" href="manifest.json" />
     <script src="serviceworker.js"></script>
-    <!-- <script src="NoSleep.min.js"></script> -->
+    <script src="NoSleep.min.js"></script>
     <script type="module">
       let audio_context = [];
       let initial_count_time = 5;
@@ -34,7 +34,7 @@
       let counter_state = false;
       document.count_down_interval = false;
       let wakeLock = null;
-      // let nosleep = new NoSleep();
+      let nosleep = new NoSleep();
 
       //retrieve previously stored count_time if it exists
       if (localStorage.count_time) {
@@ -50,12 +50,16 @@
       } catch (err) {
         console.log(err);
       }
+      window.addEventListener('focus', function() {
+        console.log('wakeLock:');
+        console.log(wakeLock);
+      });
 
       function toggle_timer() {
         counter_state = !counter_state;
         //audio context and nosleep.js must be created in response to input event (ios safari workaround)
         audio_context = new AudioContext();
-        //nosleep.enable();
+        nosleep.enable();
 
         //initialize and begin count down
         if (counter_state) {
